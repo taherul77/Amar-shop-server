@@ -1,6 +1,22 @@
 import { Request, Response } from 'express'
-
 import menuService from './menu.service'
+
+export const createMenu = async (req: Request, res: Response) => {
+  try {
+    const { ...menu } = req.body
+    const result = await menuService.createMenuForDatabase(menu)
+    res.status(200).json({
+      success: true,
+      message: 'Successfully create data',
+      data: result,
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to load data',
+    })
+  }
+}
 
 export const getMenu = async (req: Request, res: Response) => {
   try {
@@ -20,16 +36,15 @@ export const getMenu = async (req: Request, res: Response) => {
   }
 }
 
-export const getAllCategoriesAndImages = async (
-  req: Request,
-  res: Response
-) => {
+export const getSingleMenu = async (req: Request, res: Response) => {
   try {
-    const data = await menuService.getMenuCategoryAndImageFromDatabase()
+    const { id } = req.params
+
+    const result = await menuService.getSingleMenuFromDatabase(id as string)
     res.status(200).json({
       success: true,
       message: 'Successfully load data',
-      data: data,
+      data: result,
     })
   } catch (error) {
     res.status(400).json({
@@ -78,9 +93,49 @@ export const getMenuByCategories = async (req: Request, res: Response) => {
   }
 }
 
+export const updateMenu = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const updatedData = req.body
+
+    const result = await menuService.updateMenuFromDatabase(id, updatedData)
+    res.status(200).json({
+      success: true,
+      message: 'Successfully updated data',
+      data: result,
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to update data',
+    })
+  }
+}
+
+export const deleteMenu = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+
+    const result = await menuService.deleteMenuFromDatabase(id)
+    res.status(200).json({
+      success: true,
+      message: 'Successfully delete data',
+      data: result,
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to delete data',
+    })
+  }
+}
+
 export default {
+  createMenu,
   getMenu,
-  getAllCategoriesAndImages,
+  getSingleMenu,
   getAllCategories,
   getMenuByCategories,
+  updateMenu,
+  deleteMenu,
 }

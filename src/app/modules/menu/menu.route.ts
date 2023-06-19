@@ -1,11 +1,15 @@
 import express from 'express'
 import menuController from './menu.controller'
+import verifyAdmin from '../../middlewares/verifyAdmin'
 
 const router = express.Router()
 
-router.get('/get-menus', menuController.getMenu)
-router.get('/get-categories-and-images', menuController.getAllCategoriesAndImages)
-router.get('/get-categories', menuController.getAllCategories)
-router.get('/get-menu/:category', menuController.getMenuByCategories)
+router.post('/create', verifyAdmin, menuController.createMenu)
+router.get('/', menuController.getMenu)
+router.get('/single/:id', menuController.getSingleMenu)
+router.get('/categories', menuController.getAllCategories)
+router.get('/:category', menuController.getMenuByCategories)
+router.patch('/:id', verifyAdmin, menuController.updateMenu)
+router.delete('/:id', verifyAdmin, menuController.deleteMenu)
 
 export default router

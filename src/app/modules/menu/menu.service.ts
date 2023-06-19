@@ -1,8 +1,14 @@
+import IMenu from './menu.interface';
 import { Menu } from './menu.model'
+
+const createMenuForDatabase = async (payload: IMenu) => {
+  const result = await Menu.create(payload)
+  return result
+}
 
 const getAllMenuFromDatabase = async (limit?: number) => {
   let menuQuery = Menu.find()
-  
+
   if (limit) {
     menuQuery = menuQuery.limit(limit)
   }
@@ -11,23 +17,9 @@ const getAllMenuFromDatabase = async (limit?: number) => {
   return menu
 }
 
-const getMenuCategoryAndImageFromDatabase = async () => {
-  const categories = await Menu.aggregate([
-    {
-      $group: {
-        _id: '$category',
-        image: { $first: '$image' },
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        category: '$_id',
-        image: 1,
-      },
-    },
-  ])
-  return categories
+const getSingleMenuFromDatabase = async (id: string) => {
+  const result = await Menu.findById(id)
+  return result
 }
 
 const getAllMenuCategoryFromDatabase = async () => {
@@ -49,9 +41,24 @@ const getMenuByCategoryFromDatabase = async (
   return menu
 }
 
+const updateMenuFromDatabase = async (id: string, updatedData: Partial<IMenu>) => {
+  const result = await Menu.findOneAndUpdate({ _id: id }, updatedData, {
+    new: true,
+  })
+  return result
+}
+
+const deleteMenuFromDatabase = async (id: string) => {
+  const result = await Menu.findByIdAndDelete(id)
+  return result
+}
+
 export default {
+  createMenuForDatabase,
   getAllMenuFromDatabase,
-  getMenuCategoryAndImageFromDatabase,
+  getSingleMenuFromDatabase,
   getAllMenuCategoryFromDatabase,
   getMenuByCategoryFromDatabase,
+  updateMenuFromDatabase,
+  deleteMenuFromDatabase
 }
