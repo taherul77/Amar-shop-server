@@ -149,9 +149,6 @@ const getUserHandler = async (req: Request, res: Response) => {
     })
   }
 
-  console.log(phone);
-  
-
   if (typeof phone === 'string') {
     return res.status(401).json({
       success: false,
