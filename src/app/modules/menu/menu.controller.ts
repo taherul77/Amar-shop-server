@@ -130,6 +130,11 @@ export const deleteMenu = async (req: Request, res: Response) => {
   }
 }
 
+export const totalData = async (req: Request, res: Response) => {
+  const result = await menuService.total()
+  res.send({total: result})
+}
+
 export default {
   createMenu,
   getMenu,
@@ -138,4 +143,5 @@ export default {
   getMenuByCategories,
   updateMenu,
   deleteMenu,
+  totalData,
 }

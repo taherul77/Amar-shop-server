@@ -30,8 +30,8 @@ export const createOrder = async (req: Request, res: Response) => {
     total_amount: price,
     currency: 'BDT',
     tran_id: tranId,
-    success_url: `http://localhost:5000/payment/success/${tranId}`,
-    fail_url: `http://localhost:5000/payment/fail/${tranId}`,
+    success_url: `https://repliq-task-server-three.vercel.app/payment/success/${tranId}`,
+    fail_url: `https://repliq-task-server-three.vercel.app/payment/fail/${tranId}`,
     cancel_url: 'http://localhost:3030/cancel',
     ipn_url: 'http://localhost:3030/ipn',
     shipping_method: 'Courier',
@@ -70,7 +70,7 @@ export const successPayment = async (req: Request, res: Response) => {
 
   const result = await orderService.updateOrderFromDatabase(tranId as any)
   if (result.modifiedCount > 0) {
-    res.redirect(`http://localhost:5173/payment/success/${tranId}`)
+    res.redirect(`https://repliq-task-74a07.web.app/payment/success/${tranId}`)
   }
 }
 
@@ -79,12 +79,44 @@ export const failPayment = async (req: Request, res: Response) => {
 
   const result = await orderService.deleteOrderFromDatabase(tranId as any)
   if (result.deletedCount) {
-    res.redirect(`http://localhost:5173/payment/fail/${tranId}`)
+    res.redirect(`https://repliq-task-74a07.web.app/payment/fail/${tranId}`)
   }
+}
+
+export const getOrders = async (req: Request, res: Response) => {
+  const { phone } = req.params
+  try {
+    const result = await orderService.getSingleOrderFromDatabase(
+      phone as string
+    )
+    res.status(200).json({
+      success: true,
+      message: 'Successfully load data',
+      data: result,
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to load data',
+    })
+  }
+}
+
+export const totalData = async (req: Request, res: Response) => {
+  const result = await orderService.total()
+  res.send({ total: result })
+}
+
+export const all = async (req: Request, res: Response) => {
+  const result = await orderService.all()
+  res.send(result)
 }
 
 export default {
   createOrder,
   successPayment,
   failPayment,
+  getOrders,
+  totalData,
+  all,
 }

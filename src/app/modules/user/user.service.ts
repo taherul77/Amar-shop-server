@@ -13,8 +13,21 @@ const findUserById = async (id: string) => {
   return User.findById(id)
 }
 
+const total = async () => {
+  const result = await User.countDocuments({role: "user"})
+  return result
+}
+
+const all = async () => {
+  const result = await User.find({})
+  return result
+}
+
+
 export default {
   createUserToDatabase,
   findUserByPhoneNumber,
   findUserById,
+  total,
+  all
 }

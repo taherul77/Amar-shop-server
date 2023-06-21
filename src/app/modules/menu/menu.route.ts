@@ -11,5 +11,6 @@ router.get('/categories', menuController.getAllCategories)
 router.get('/:category', menuController.getMenuByCategories)
 router.patch('/:id', verifyAdmin, menuController.updateMenu)
 router.delete('/:id', verifyAdmin, menuController.deleteMenu)
+router.get('/data/total', menuController.totalData)
 
 export default router

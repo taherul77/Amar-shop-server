@@ -172,8 +172,20 @@ const getUserHandler = async (req: Request, res: Response) => {
   })
 }
 
+export const totalData = async (req: Request, res: Response) => {
+  const result = await userService.total()
+  res.send({ total: result })
+}
+
+export const all = async (req: Request, res: Response) => {
+  const result = await userService.all()
+  res.send(result)
+}
+
 export default {
   createUserHandler,
   loginUserHandler,
-  getUserHandler
+  getUserHandler,
+  totalData,
+  all
 }

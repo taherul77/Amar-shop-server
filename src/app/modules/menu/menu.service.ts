@@ -53,6 +53,11 @@ const deleteMenuFromDatabase = async (id: string) => {
   return result
 }
 
+const total = async () => {
+  const result = await Menu.countDocuments()
+  return result
+}
+
 export default {
   createMenuForDatabase,
   getAllMenuFromDatabase,
@@ -60,5 +65,6 @@ export default {
   getAllMenuCategoryFromDatabase,
   getMenuByCategoryFromDatabase,
   updateMenuFromDatabase,
-  deleteMenuFromDatabase
+  deleteMenuFromDatabase,
+  total,
 }

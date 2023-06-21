@@ -23,8 +23,26 @@ const deleteOrderFromDatabase = async (tranId: any) => {
   return result
 }
 
+const getSingleOrderFromDatabase = async (phone: string) => {
+  const result = await Order.find({phone: phone})
+  return result
+}
+
+const total = async () => {
+  const result = await Order.countDocuments()
+  return result
+}
+
+const all = async () => {
+  const result = await Order.find({})
+  return result
+}
+
 export default {
   createOrderForDatabase,
   updateOrderFromDatabase,
   deleteOrderFromDatabase,
+  getSingleOrderFromDatabase,
+  total,
+  all,
 }
