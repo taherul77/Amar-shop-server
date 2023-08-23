@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Application Route
-app.use('/api/v1/menu', menuRoute)
+app.use('/api/v1/product', menuRoute)
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/order', orderRoute)
 

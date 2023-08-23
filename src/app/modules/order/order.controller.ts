@@ -30,7 +30,7 @@ export const createOrder = async (req: Request, res: Response) => {
     total_amount: price,
     currency: 'BDT',
     tran_id: tranId,
-    success_url: `https://repliq-task-server-three.vercel.app/payment/success/${tranId}`,
+    success_url: `https://repliq-task-client.vercel.app/payment`,
     fail_url: `https://repliq-task-server-three.vercel.app/payment/fail/${tranId}`,
     cancel_url: 'http://localhost:3030/cancel',
     ipn_url: 'http://localhost:3030/ipn',

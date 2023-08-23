@@ -1,9 +1,10 @@
 type IMenu = {
   name: string
-  recipe?: string
+  description?: string
+  rate:number
   image: string
-  category: string
   price: number
+  discount_price:number
 }
 
 export default IMenu
